@@ -3,10 +3,11 @@ using UnityEngine.InputSystem;
 
 public class SquareSpawner : MonoBehaviour
 {
-    
+    public GameObject square;
     public bool clicked = false;
-    public Vector2 squareSizeX = new Vector2(0.2f, 0);
-    public Vector2 squareSizeY = new Vector2(0, 0.2f);
+    public Vector3 squareSizeX = new Vector3(0.2f, 0, 0);
+    public Vector3 squareSizeY = new Vector3(0, 0.2f, 0);
+    public Vector3 mousePos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,26 +18,25 @@ public class SquareSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (Mouse.current.leftButton.isPressed)
+        mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        mousePos.z = 0;
+
+        if (Mouse.current.leftButton.isPressed && clicked == false)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            Debug.Log(mousePos);
             clicked = true;
 
-            drawSquare(mousePos);
+            Instantiate(square, mousePos, transform.rotation);//spawn a square
         }
-        else
+        else if(Mouse.current.leftButton.isPressed == false)
         {
             clicked = false;
         }
+
+        Debug.DrawLine(mousePos + squareSizeX, mousePos + squareSizeY, Color.pink);//top Left
+        Debug.DrawLine(mousePos - squareSizeX, mousePos + squareSizeY, Color.pink);//top Right
+        Debug.DrawLine(mousePos + squareSizeX, mousePos - squareSizeY, Color.pink);//bottom Left
+        Debug.DrawLine(mousePos - squareSizeX, mousePos - squareSizeY, Color.pink);//bottom Right
     }
 
-    public void drawSquare(Vector2 mousepos)
-    {
-        Debug.DrawLine(mousepos + squareSizeX, mousepos + squareSizeY, Color.red);//top Left
-        Debug.DrawLine(mousepos - squareSizeX, mousepos + squareSizeY, Color.red);//top Right
-        Debug.DrawLine(mousepos + squareSizeX, mousepos - squareSizeY, Color.red);//bottom Left
-        Debug.DrawLine(mousepos - squareSizeX, mousepos - squareSizeY, Color.red);//bottom Right
-    }
     
 }
