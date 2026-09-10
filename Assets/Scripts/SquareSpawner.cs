@@ -36,6 +36,20 @@ public class SquareSpawner : MonoBehaviour
         Debug.DrawLine(mousePos - squareSizeX, mousePos + squareSizeY, Color.pink);//top Right
         Debug.DrawLine(mousePos + squareSizeX, mousePos - squareSizeY, Color.pink);//bottom Left
         Debug.DrawLine(mousePos - squareSizeX, mousePos - squareSizeY, Color.pink);//bottom Right
+
+        if (Mouse.current.scroll.ReadValue().y > 0) 
+        {
+            squareSizeX += new Vector3(0.05f, 0, 0);
+            squareSizeY += new Vector3(0, 0.05f, 0);
+        }
+        else if (Mouse.current.scroll.ReadValue().y < 0 && squareSizeX.x > 0.1) 
+        {
+            squareSizeX -= new Vector3(0.05f, 0, 0);
+            squareSizeY -= new Vector3(0, 0.05f, 0);
+        }
+
+        //Debug.Log(Input.mouseScrollDelta.y);
+        //Debug.Log(Mouse.current.scroll.ReadValue().y);
     }
 
     
