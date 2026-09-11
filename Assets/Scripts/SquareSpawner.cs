@@ -18,8 +18,8 @@ public class SquareSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        mousePos.z = 0;
+        mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());//track the mouse position
+        mousePos.z = 0;//turn of the z axis
 
         if (Mouse.current.leftButton.isPressed && clicked == false)
         {
@@ -37,12 +37,12 @@ public class SquareSpawner : MonoBehaviour
         Debug.DrawLine(mousePos + squareSizeX, mousePos - squareSizeY, Color.pink);//bottom Left
         Debug.DrawLine(mousePos - squareSizeX, mousePos - squareSizeY, Color.pink);//bottom Right
 
-        if (Mouse.current.scroll.ReadValue().y > 0) 
+        if (Mouse.current.scroll.ReadValue().y > 0)//scroll down
         {
             squareSizeX += new Vector3(0.05f, 0, 0);
             squareSizeY += new Vector3(0, 0.05f, 0);
         }
-        else if (Mouse.current.scroll.ReadValue().y < 0 && squareSizeX.x > 0.1) 
+        else if (Mouse.current.scroll.ReadValue().y < 0 && squareSizeX.x > 0.1)//scroll down, the size can't go negative
         {
             squareSizeX -= new Vector3(0.05f, 0, 0);
             squareSizeY -= new Vector3(0, 0.05f, 0);

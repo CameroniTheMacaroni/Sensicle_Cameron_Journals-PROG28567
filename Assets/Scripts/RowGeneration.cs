@@ -24,9 +24,9 @@ public class RowGeneration : MonoBehaviour
 
     public void readInput(string tempInput)
     {
-        WRONG.SetActive(false);
+        WRONG.SetActive(false);//turn off invalid screen
 
-        if (Int32.TryParse(tempInput, out int x))
+        if (Int32.TryParse(tempInput, out int x))//try to convert the input from a string to an int
         {
             input = x;
             validNumber = true;
@@ -46,20 +46,20 @@ public class RowGeneration : MonoBehaviour
         }
         else
         {
-            WRONG.SetActive(true);
+            WRONG.SetActive(true);//turn on invalid number screen
         }
 
     }
 
     IEnumerator drawSquares()
     {
-        transform.position = new Vector3 (-8, 0, 0);
+        transform.position = new Vector3 (-8, 0, 0);//move all the way to the left
         for (int i = 0; i < input; i++)
         {
-            GameObject thing = Instantiate(square, transform.position, transform.rotation);
+            GameObject thing = Instantiate(square, transform.position, transform.rotation);//spawn a square
 
-            transform.position += speed;
-            yield return new WaitForSeconds(drawSpeed);
+            transform.position += speed;//move to the right a bit
+            yield return new WaitForSeconds(drawSpeed);//wait
 
         }
     }

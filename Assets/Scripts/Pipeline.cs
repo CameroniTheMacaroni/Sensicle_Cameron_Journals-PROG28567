@@ -25,23 +25,23 @@ public class Pipeline : MonoBehaviour
         {
             if (canUpdateMouse)
             {
-                mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-                canUpdateMouse = false;
-                mousePoints.Add(mousePos);
+                mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());//track mouse position
+                canUpdateMouse = false;//disable mouse tracking for the next 0.1 seconds
+                mousePoints.Add(mousePos);//add position to the list
             }
 
             if (timer  >= maxTimer)//if timer is bigger than 0.1s
             {
                 timer = 0;
-                canUpdateMouse = true;
+                canUpdateMouse = true;//get a new mouse position in the list
             }
-            timer += Time.deltaTime;
+            timer += Time.deltaTime;//increase timer
 
             if (mousePoints.Count > 1)
             {
-                for (int i = 1; i < mousePoints.Count; i++)//i starts at 1
+                for (int i = 1; i < mousePoints.Count; i++)//i starts at 1 because...
                 {
-                    Debug.DrawLine(mousePoints[i - 1], mousePoints[i], Color.red);
+                    Debug.DrawLine(mousePoints[i - 1], mousePoints[i], Color.red);//... we draw a line from one point to the one before it
                 }
             }
         }
@@ -54,11 +54,11 @@ public class Pipeline : MonoBehaviour
             {
                 for (int i = 1; i < mousePoints.Count; i++)//i starts at 1
                 {
-                    magnitudeTotal += (mousePoints[i - 1] - mousePoints[i]).magnitude;
+                    magnitudeTotal += (mousePoints[i - 1] - mousePoints[i]).magnitude;//add up the length of all the lines
                 }
-                Debug.Log("total length: " + magnitudeTotal);
+                Debug.Log("total length: " + magnitudeTotal);//display total length
             }
-            mousePoints.Clear();
+            mousePoints.Clear();//clear the list when the mouse is released
             magnitudeTotal = 0;
         }
     }
