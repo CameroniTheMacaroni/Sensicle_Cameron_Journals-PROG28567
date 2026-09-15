@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,12 +14,16 @@ public class Player : MonoBehaviour
     public int numberOfBombs;
     public Vector2 bombSpacing = new Vector2 (0, -1);
 
+    public float cornerSpawnDistance;
+
+    public float timer;
+
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
 
     void Start()
     {
         Debug.Log(normalize(new Vector2(1.5f, -3.5f)));
-        numberOfBombs = 5;
+        numberOfBombs = 8;
     }
 
     void Update()
@@ -27,9 +32,12 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(SpawnBombAtOffset(Vector2.down, numberOfBombs, bombSpacing));
         }
-        else if (Keyboard.current.bKey.isPressed == false)
+        if (Keyboard.current.nKey.wasPressedThisFrame)
         {
+            cornerSpawn(cornerSpawnDistance);
         }
+
+        timer += Time.deltaTime;
     }
 
 
@@ -43,6 +51,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void cornerSpawn(float inDistance)
+    {
+        float distance = inDistance * math.cos(45);
+        Instantiate(bombPrefab, transform.position + new Vector3(flipACoin(inDistance), flipACoin(inDistance), 0), Quaternion.identity);
+        
+    }
+    public float flipACoin(float coin)
+    {
+        int x = UnityEngine.Random.Range(0, 2);
+        if(x == 1)
+        {
+            coin = coin * -1;
+        }
+        return coin;
+    }
+    
     public Vector2 normalize(Vector2 input)
     {
         Debug.Log("answer: " + input.normalized);
