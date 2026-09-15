@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,27 +10,37 @@ public class Player : MonoBehaviour
     public GameObject bombPrefab;
     public List<Transform> asteroidTransforms;
 
+    public int numberOfBombs;
+    public Vector2 bombSpacing = new Vector2 (0, -1);
+
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
 
     void Start()
     {
         Debug.Log(normalize(new Vector2(1.5f, -3.5f)));
+        numberOfBombs = 5;
     }
 
     void Update()
     {
         if (Keyboard.current.bKey.wasPressedThisFrame)
         {
-            SpawnBombAtOffset(Vector3.up);
+            StartCoroutine(SpawnBombAtOffset(Vector2.down, numberOfBombs, bombSpacing));
         }
         else if (Keyboard.current.bKey.isPressed == false)
         {
         }
     }
 
-    public void SpawnBombAtOffset(Vector3 inOffset)
+
+    IEnumerator SpawnBombAtOffset(Vector2 inOffset, int numberofbombs, Vector2 bombSpacing)
     {
-        Instantiate(bombPrefab, transform.position + inOffset, Quaternion.identity);
+        for (int i = 0; i < numberofbombs; i++)
+        {
+            Instantiate(bombPrefab, transform.position + (Vector3) inOffset, Quaternion.identity);
+            inOffset += bombSpacing;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public Vector2 normalize(Vector2 input)
