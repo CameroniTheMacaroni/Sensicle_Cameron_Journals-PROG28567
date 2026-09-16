@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     public float cornerSpawnDistance;
 
-    public float timer;
+    public float teleportRatio;
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
 
@@ -36,8 +36,10 @@ public class Player : MonoBehaviour
         {
             cornerSpawn(cornerSpawnDistance);
         }
-
-        timer += Time.deltaTime;
+        if (Keyboard.current.mKey.wasPressedThisFrame)
+        {
+            teleport(enemyTransform, teleportRatio);
+        }
     }
 
 
@@ -57,6 +59,7 @@ public class Player : MonoBehaviour
         Instantiate(bombPrefab, transform.position + new Vector3(flipACoin(inDistance), flipACoin(inDistance), 0), Quaternion.identity);
         
     }
+    
     public float flipACoin(float coin)
     {
         int x = UnityEngine.Random.Range(0, 2);
@@ -66,7 +69,21 @@ public class Player : MonoBehaviour
         }
         return coin;
     }
-    
+   
+    public void teleport(Transform target, float ratio)
+    {
+        float distance = Vector2.Distance(transform.position, target.position);
+        
+        Vector2 direction = target.transform.position - transform.position;
+
+        direction = direction.normalized;
+        Debug.Log(direction + " " + distance);
+
+        transform.position = direction * distance;
+
+        //Debug.DrawLine(transform.position, direction);
+    }
+
     public Vector2 normalize(Vector2 input)
     {
         Debug.Log("answer: " + input.normalized);
