@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     public float cornerSpawnDistance;
 
     public float teleportRatio;
+    public float maxRange = 2.5f;
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
 
@@ -41,7 +43,7 @@ public class Player : MonoBehaviour
             teleport(enemyTransform, teleportRatio);
         }
 
-        radars();
+        radars(maxRange);
     }
 
 
@@ -86,13 +88,16 @@ public class Player : MonoBehaviour
         //Debug.DrawLine(transform.position, direction);
     }
 
-    public void radars()
+    public void radars(float range)
     {
         for (int i = 0; i < asteroidTransforms.Count; i++)
         {
-            if(Vector2.Distance(asteroidTransforms[i].transform.position, transform.position) > 2.5)
+            if(Vector2.Distance(asteroidTransforms[i].transform.position, transform.position) <= 2.5)
             {
+                Vector2 direction = asteroidTransforms[i].transform.position - transform.position;
+                direction = direction.normalized;
 
+                Debug.DrawLine(transform.position, (transform.position + (Vector3) (direction * maxRange)), Color.green);
             }
         }
     }
