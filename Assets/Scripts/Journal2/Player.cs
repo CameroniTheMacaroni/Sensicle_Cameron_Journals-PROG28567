@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
         {
             teleport(enemyTransform, teleportRatio);
         }
+
+        radars();
     }
 
 
@@ -72,18 +74,29 @@ public class Player : MonoBehaviour
    
     public void teleport(Transform target, float ratio)
     {
-        float distance = Vector2.Distance(transform.position, target.position);
+        float distance = Vector2.Distance(target.transform.position, transform.position);
         
         Vector2 direction = target.transform.position - transform.position;
 
         direction = direction.normalized;
         Debug.Log(direction + " " + distance);
 
-        transform.position = direction * distance;
+        transform.position += (Vector3)(direction * (distance * ratio));
 
         //Debug.DrawLine(transform.position, direction);
     }
 
+    public void radars()
+    {
+        for (int i = 0; i < asteroidTransforms.Count; i++)
+        {
+            if(Vector2.Distance(asteroidTransforms[i].transform.position, transform.position) > 2.5)
+            {
+
+            }
+        }
+    }
+    
     public Vector2 normalize(Vector2 input)
     {
         Debug.Log("answer: " + input.normalized);
