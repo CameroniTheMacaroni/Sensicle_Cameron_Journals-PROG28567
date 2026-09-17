@@ -24,26 +24,25 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(normalize(new Vector2(1.5f, -3.5f)));
-        numberOfBombs = 8;
+
     }
 
     void Update()
     {
-        if (Keyboard.current.bKey.wasPressedThisFrame)
+        if (Keyboard.current.bKey.wasPressedThisFrame)//bomb trails
         {
             StartCoroutine(SpawnBombAtOffset(Vector2.down, numberOfBombs, bombSpacing));
         }
-        if (Keyboard.current.nKey.wasPressedThisFrame)
+        if (Keyboard.current.nKey.wasPressedThisFrame)//corner bombs
         {
             cornerSpawn(cornerSpawnDistance);
         }
-        if (Keyboard.current.mKey.wasPressedThisFrame)
+        if (Keyboard.current.mKey.wasPressedThisFrame)//warp drive
         {
             teleport(enemyTransform, teleportRatio);
         }
 
-        radars(maxRange);
+        radars(maxRange);//radars
     }
 
 
@@ -51,20 +50,21 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < numberofbombs; i++)
         {
-            Instantiate(bombPrefab, transform.position + (Vector3) inOffset, Quaternion.identity);
-            inOffset += bombSpacing;
-            yield return new WaitForSeconds(0.1f);
+            //spawn bombs for each number of bombs specified
+            Instantiate(bombPrefab, transform.position + (Vector3) inOffset, Quaternion.identity);//place them at the ship position + bomb spacing
+            inOffset += bombSpacing;//increment the bomb spacing
+            yield return new WaitForSeconds(0.1f);//wait a bit so that it looks cool
         }
     }
 
     public void cornerSpawn(float inDistance)
     {
-        float distance = inDistance * math.cos(45);
+        float distance = inDistance * math.cos(45);//find the distance for the bombs in the corner
         Instantiate(bombPrefab, transform.position + new Vector3(flipACoin(inDistance), flipACoin(inDistance), 0), Quaternion.identity);
         
     }
     
-    public float flipACoin(float coin)
+    public float flipACoin(float coin)//randomly invert the sign of the distance
     {
         int x = UnityEngine.Random.Range(0, 2);
         if(x == 1)
@@ -76,33 +76,30 @@ public class Player : MonoBehaviour
    
     public void teleport(Transform target, float ratio)
     {
-        float distance = Vector2.Distance(target.transform.position, transform.position);
+        float distance = Vector2.Distance(target.transform.position, transform.position);//find the distance between the ship and the target
         
-        Vector2 direction = target.transform.position - transform.position;
+        Vector2 direction = target.transform.position - transform.position;//find the direction from the ship to the target
 
-        direction = direction.normalized;
-        Debug.Log(direction + " " + distance);
+        direction = direction.normalized;//normalize the vector
 
-        transform.position += (Vector3)(direction * (distance * ratio));
-
-        //Debug.DrawLine(transform.position, direction);
+        transform.position += (Vector3)(direction * (distance * ratio));//multiply the distance by the ratio of how far we want to go, and update position 
     }
 
     public void radars(float range)
     {
-        for (int i = 0; i < asteroidTransforms.Count; i++)
+        for (int i = 0; i < asteroidTransforms.Count; i++)//test for every asteroid in the list
         {
-            if(Vector2.Distance(asteroidTransforms[i].transform.position, transform.position) <= 2.5)
+            if(Vector2.Distance(asteroidTransforms[i].transform.position, transform.position) <= 2.5)//in the asteroid is within range...
             {
-                Vector2 direction = asteroidTransforms[i].transform.position - transform.position;
+                Vector2 direction = asteroidTransforms[i].transform.position - transform.position;//... find the direction to it...
                 direction = direction.normalized;
 
-                Debug.DrawLine(transform.position, (transform.position + (Vector3) (direction * maxRange)), Color.green);
+                Debug.DrawLine(transform.position, (transform.position + (Vector3) (direction * maxRange)), Color.green);// ... and draw a line to it
             }
         }
     }
     
-    public Vector2 normalize(Vector2 input)
+    public Vector2 normalize(Vector2 input)//unused
     {
         Debug.Log("answer: " + input.normalized);
         float x;
