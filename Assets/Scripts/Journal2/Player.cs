@@ -72,10 +72,11 @@ public class Player : MonoBehaviour
     }
     IEnumerator SpawnBombAtOffset(Vector2 inOffset, int numberofbombs, Vector2 bombSpacing)
     {
+        Vector3 spawnPosition = transform.position;
         for (int i = 0; i < numberofbombs; i++)
         {
             //spawn bombs for each number of bombs specified
-            Instantiate(bombPrefab, transform.position + (Vector3) inOffset, Quaternion.identity);//place them at the ship position + bomb spacing
+            Instantiate(bombPrefab, spawnPosition + (Vector3) inOffset, Quaternion.identity);//place them at the ship position + bomb spacing
             inOffset += bombSpacing;//increment the bomb spacing
             yield return new WaitForSeconds(0.1f);//wait a bit so that it looks cool
         }
