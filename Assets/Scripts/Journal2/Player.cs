@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
 
     public int numberOfBombs;
     public Vector2 bombSpacing = new Vector2 (0, -1);
+    public Vector2 playerSpeedX = new Vector2(1, 0);
+    public Vector2 playerSpeedY = new Vector2(0, 1);
+    
 
     public float cornerSpawnDistance;
 
@@ -43,9 +46,30 @@ public class Player : MonoBehaviour
         }
 
         radars(maxRange);//radars
+
+        playerMovement(playerSpeedX, playerSpeedY);
     }
 
 
+    public void playerMovement(Vector2 speedX, Vector2 speedY)
+    {
+        if (Keyboard.current.wKey.wasPressedThisFrame)
+        {
+            transform.position += (Vector3) speedY;
+        }
+        if (Keyboard.current.aKey.wasPressedThisFrame)
+        {
+            transform.position -= (Vector3) speedX;
+        }
+        if (Keyboard.current.sKey.wasPressedThisFrame)
+        {
+            transform.position -= (Vector3) speedY;
+        }
+        if (Keyboard.current.dKey.wasPressedThisFrame)
+        {
+            transform.position += (Vector3) speedX;
+        }
+    }
     IEnumerator SpawnBombAtOffset(Vector2 inOffset, int numberofbombs, Vector2 bombSpacing)
     {
         for (int i = 0; i < numberofbombs; i++)
