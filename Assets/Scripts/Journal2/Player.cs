@@ -13,15 +13,14 @@ public class Player : MonoBehaviour
     public List<Transform> asteroidTransforms;
 
     public int numberOfBombs;
-    public Vector2 bombSpacing = new Vector2 (0, -1);
-    public Vector2 playerSpeedX = new Vector2(1, 0);
-    public Vector2 playerSpeedY = new Vector2(0, 1);
-    
+    public Vector2 bombSpacing = new Vector2 (0, -1);    
 
     public float cornerSpawnDistance;
 
     public float teleportRatio;
     public float maxRange = 2.5f;
+
+    public float speed = 5;
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
 
@@ -47,29 +46,31 @@ public class Player : MonoBehaviour
 
         radars(maxRange);//radars
 
-        playerMovement(playerSpeedX, playerSpeedY);
+        playerMovement();
     }
 
 
-    public void playerMovement(Vector2 speedX, Vector2 speedY)
+    public void playerMovement()
     {
-        if (Keyboard.current.wKey.wasPressedThisFrame)
+        if (Keyboard.current.wKey.isPressed)
         {
-            transform.position += (Vector3) speedY;
+            transform.position += Vector3.up * Time.deltaTime * speed;
         }
-        if (Keyboard.current.aKey.wasPressedThisFrame)
+        if (Keyboard.current.dKey.isPressed)
         {
-            transform.position -= (Vector3) speedX;
+            transform.position += Vector3.right * Time.deltaTime * speed;
         }
-        if (Keyboard.current.sKey.wasPressedThisFrame)
+        if (Keyboard.current.sKey.isPressed)
         {
-            transform.position -= (Vector3) speedY;
+            transform.position += Vector3.down * Time.deltaTime * speed;
         }
-        if (Keyboard.current.dKey.wasPressedThisFrame)
+        if (Keyboard.current.aKey.isPressed)
         {
-            transform.position += (Vector3) speedX;
+            transform.position += Vector3.left * Time.deltaTime * speed;
         }
+
     }
+   
     IEnumerator SpawnBombAtOffset(Vector2 inOffset, int numberofbombs, Vector2 bombSpacing)
     {
         Vector3 spawnPosition = transform.position;
