@@ -21,6 +21,10 @@ public class Player : MonoBehaviour
     public float maxRange = 2.5f;
 
     public float speed = 5;
+    public float acceleration = 5;
+    public float maxSpeed = 10;
+    public float speedIncrease;
+
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
 
@@ -50,23 +54,43 @@ public class Player : MonoBehaviour
     }
 
 
-    public void playerMovement()
+    public void playerMovement()//MAKE SPEED INTO VECTOR
     {
         if (Keyboard.current.wKey.isPressed)
         {
-            transform.position += Vector3.up * Time.deltaTime * speed;
+            //speedIncrease /= 2;
+            transform.position += Vector3.up * Time.deltaTime * (speed + speedIncrease);
+            speedIncrease += (Time.deltaTime * acceleration);
         }
         if (Keyboard.current.dKey.isPressed)
         {
-            transform.position += Vector3.right * Time.deltaTime * speed;
+            //speedIncrease /= 2;
+            transform.position += Vector3.right * Time.deltaTime * (speed + speedIncrease);
+            speedIncrease += (Time.deltaTime * acceleration);
         }
         if (Keyboard.current.sKey.isPressed)
         {
-            transform.position += Vector3.down * Time.deltaTime * speed;
+            //speedIncrease /= 2;
+            transform.position += Vector3.down * Time.deltaTime * (speed + speedIncrease);
+            speedIncrease += (Time.deltaTime * acceleration);
         }
         if (Keyboard.current.aKey.isPressed)
         {
-            transform.position += Vector3.left * Time.deltaTime * speed;
+            //speedIncrease /= 2;
+            transform.position += Vector3.left * Time.deltaTime * (speed + speedIncrease);
+            speedIncrease += (Time.deltaTime * acceleration);
+        }
+
+
+        if (Keyboard.current.anyKey.isPressed == false)//reset speed
+        {
+            speedIncrease = 0;
+        }
+
+
+        if (speedIncrease + speed > maxSpeed)
+        {
+            speedIncrease = maxSpeed - speed;
         }
 
     }
