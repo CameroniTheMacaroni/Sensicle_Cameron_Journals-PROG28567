@@ -22,7 +22,10 @@ public class Player : MonoBehaviour
 
     public float maxSpeed = 10;
     public float acceleration = 5;
+    public float deceleration = 5;
+
     public Vector2 velocity;
+    public Vector2 cancelMomentum;
 
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
@@ -53,11 +56,11 @@ public class Player : MonoBehaviour
     }
 
 
-    public void playerMovement()//MAKE SPEED INTO VECTOR
+    public void playerMovement()
     {
         if (Keyboard.current.wKey.isPressed)
         {
-            velocity += acceleration * Time.deltaTime * Vector2.up;
+            velocity += acceleration * Time.deltaTime * Vector2.up;//add acceleration variable to speed with respect to time
         }
         if (Keyboard.current.dKey.isPressed)
         {
@@ -72,13 +75,19 @@ public class Player : MonoBehaviour
             velocity += acceleration * Time.deltaTime * Vector2.left;
         }
 
-        //if(Keyboard.current.wKey.isPressed == false || Keyboard.current.aKey.isPressed == false || Keyboard.current.sKey.isPressed == false || Keyboard.current.dKey.isPressed == false)
-        //{
+        //if theres no movement inputs
+        if(Keyboard.current.wKey.isPressed == false && Keyboard.current.aKey.isPressed == false && Keyboard.current.sKey.isPressed == false && Keyboard.current.dKey.isPressed == false)
+        {
+            cancelMomentum = velocity.normalized;//normalize the velocity vector...
 
-        //}
+            if (velocity != Vector2.zero)//... and if the ship is still moving... 
+            {
+                velocity -= cancelMomentum * Time.deltaTime * deceleration;//... substact the normalized velocity vector from the velocity vector
+            }
+        }
 
-        velocity = Vector2.ClampMagnitude(velocity, maxSpeed);
-        transform.position += (Vector3) velocity * Time.deltaTime;
+        velocity = Vector2.ClampMagnitude(velocity, maxSpeed);//don't let the ship go too fast
+        transform.position += (Vector3) velocity * Time.deltaTime;//update ship position
 
     }
    
