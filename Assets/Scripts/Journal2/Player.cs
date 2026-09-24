@@ -20,10 +20,9 @@ public class Player : MonoBehaviour
     public float teleportRatio;
     public float maxRange = 2.5f;
 
-    public float speed = 5;
-    public float acceleration = 5;
     public float maxSpeed = 10;
-    public float speedIncrease;
+    public float acceleration = 5;
+    public Vector2 velocity;
 
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
@@ -58,40 +57,28 @@ public class Player : MonoBehaviour
     {
         if (Keyboard.current.wKey.isPressed)
         {
-            //speedIncrease /= 2;
-            transform.position += Vector3.up * Time.deltaTime * (speed + speedIncrease);
-            speedIncrease += (Time.deltaTime * acceleration);
+            velocity += acceleration * Time.deltaTime * Vector2.up;
         }
         if (Keyboard.current.dKey.isPressed)
         {
-            //speedIncrease /= 2;
-            transform.position += Vector3.right * Time.deltaTime * (speed + speedIncrease);
-            speedIncrease += (Time.deltaTime * acceleration);
+            velocity += acceleration * Time.deltaTime * Vector2.right;
         }
         if (Keyboard.current.sKey.isPressed)
         {
-            //speedIncrease /= 2;
-            transform.position += Vector3.down * Time.deltaTime * (speed + speedIncrease);
-            speedIncrease += (Time.deltaTime * acceleration);
+            velocity += acceleration * Time.deltaTime * Vector2.down;
         }
         if (Keyboard.current.aKey.isPressed)
         {
-            //speedIncrease /= 2;
-            transform.position += Vector3.left * Time.deltaTime * (speed + speedIncrease);
-            speedIncrease += (Time.deltaTime * acceleration);
+            velocity += acceleration * Time.deltaTime * Vector2.left;
         }
 
+        //if(Keyboard.current.wKey.isPressed == false || Keyboard.current.aKey.isPressed == false || Keyboard.current.sKey.isPressed == false || Keyboard.current.dKey.isPressed == false)
+        //{
 
-        if (Keyboard.current.anyKey.isPressed == false)//reset speed
-        {
-            speedIncrease = 0;
-        }
+        //}
 
-
-        if (speedIncrease + speed > maxSpeed)
-        {
-            speedIncrease = maxSpeed - speed;
-        }
+        velocity = Vector2.ClampMagnitude(velocity, maxSpeed);
+        transform.position += (Vector3) velocity * Time.deltaTime;
 
     }
    
