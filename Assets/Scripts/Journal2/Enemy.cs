@@ -36,66 +36,36 @@ public class Enemy : MonoBehaviour
     {
         if (!targetFound)
         {
-            startingPos = transform.position;
-            chargeTarget = player.transform.position;
-            distance = Vector2.Distance(startingPos, chargeTarget);
+            startingPos = transform.position;//track the starting position of the enemy ship
+            chargeTarget = player.transform.position;//track the player's position so that we can charge towards it
+            distance = Vector2.Distance(startingPos, chargeTarget);//and calculate the distance between the two
 
-            chargeDirection = (chargeTarget - (Vector2)transform.position).normalized;
-            targetFound = true;
+            chargeDirection = (chargeTarget - (Vector2)transform.position).normalized;//calculate the direction the ship needs to go
+            targetFound = true;//make sure this code only runs when it needs to
         }
 
-        Debug.DrawLine(startingPos, chargeTarget, Color.red);
+        Debug.DrawLine(startingPos, chargeTarget, Color.red);//draw the line of the tragectory
 
-        //Debug.Log(Vector2.Distance(transform.position, chargeTarget) + " " + distance);
-        //screenEdges = findMaxDistance(chargeDirection);
-
-        if (Vector2.Distance(startingPos, transform.position) < distance)
+        if (Vector2.Distance(startingPos, transform.position) < distance)//if the enemy ship has not reached its target... 
         {
-            velocity += acceleration * Time.deltaTime * (Vector3) chargeDirection;
+            velocity += acceleration * Time.deltaTime * (Vector3) chargeDirection;//... accelerate towards the player
         }
-        else
+        else//if the enemy ship  has reached its target... 
         {
-            cancelMomentum = velocity.normalized;
-            velocity -= cancelMomentum * Time.deltaTime * deceleration;
+            cancelMomentum = velocity.normalized;//... find the direction the ship is moving in... 
+            velocity -= cancelMomentum * Time.deltaTime * deceleration;// ... and slowly substract it from the ships speed
 
-            if (transform.position.x > 17 || transform.position.x < -17 || transform.position.y > 9 || transform.position.y < -9)
+            if (transform.position.x > 17 || transform.position.x < -17 || transform.position.y > 9 || transform.position.y < -9)// if the ship gets too close to the edges
             {
-                velocity -= cancelMomentum * Time.deltaTime * stopNowDeceleration;
+                velocity -= cancelMomentum * Time.deltaTime * stopNowDeceleration;//decelerate a lot so that it slows down in time
             }
 
-            if (velocity.magnitude <= 0.1)
+            if (velocity.magnitude <= 0.1)//once the ship is stopped...
             {
-                targetFound = false;
+                targetFound = false;//... find a new target
             }
         }
 
-
-
-        transform.position += velocity * Time.deltaTime;
+        transform.position += velocity * Time.deltaTime;// update position
     }
-
-    //public Vector2 findMaxDistance(Vector2 direction)
-    //{
-    //    float endX;
-    //    float endY;
-    //    if (direction.x > 0)
-    //    {
-    //        endX = 18;
-    //    }
-    //    else
-    //    {
-    //        endX = -18;
-    //    }
-
-    //    if (direction.y > 0)
-    //    {
-    //        endY = 10;
-    //    }
-    //    else
-    //    {
-    //        endY = -10;
-    //    }
-
-    //    return new Vector2(endX, endY);
-    //}
 }

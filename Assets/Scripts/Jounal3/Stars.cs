@@ -8,7 +8,6 @@ public class Stars : MonoBehaviour
     public List<Transform> starTransforms;
     public float drawingTime;
 
-    private Vector3 currentPosition;
     private Vector3 startPosition;
     private Vector3 endPosition;
 
@@ -21,37 +20,32 @@ public class Stars : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!constellationDrawn)
-        {
-
-            //StartCoroutine(Drawconstellation());
-            DrawConstellation();
-            //constellationDrawn = true;
-        }
+        DrawConstellation();
     }
 
     public void DrawConstellation()
     {
-        startPosition = starTransforms[currentStar].position;
-        endPosition = starTransforms[currentStar + 1].position;
+        startPosition = starTransforms[currentStar].position;//decide on the start of the line
+        endPosition = starTransforms[currentStar + 1].position;//decide on the end of the line
 
-        Debug.DrawLine(startPosition, Vector3.Lerp(startPosition, endPosition, linePercentage), Color.purple);
+        Debug.DrawLine(startPosition, Vector3.Lerp(startPosition, endPosition, linePercentage), Color.purple);//slowly draw a line from the two points
+
         for (int i = 0; i < currentStar; ++i)
         {
-            Debug.DrawLine(starTransforms[i].position, starTransforms[i + 1].position, Color.purple);
+            Debug.DrawLine(starTransforms[i].position, starTransforms[i + 1].position, Color.purple);//redraw the lines that have already been drawn
         }
-        //Debug.Log(Vector3.Lerp(startPosition, endPosition, 0));
-        linePercentage += lineDrawSpeed;
 
-        if(linePercentage >= 1)
+        linePercentage += lineDrawSpeed;//increment how much of the line we draw
+
+        if(linePercentage >= 1)//if the line is complete, then reset it to 0
         {
-            if(currentStar == 5)
+            if(currentStar == 5)//if we've gone through the list of stars... 
             {
-                currentStar = 0;
+                currentStar = 0;//... restart the process...
             }
-            else
+            else//... if not... 
             {
-                currentStar++;
+                currentStar++;//... go to the next star.
             }
             linePercentage = 0;
 

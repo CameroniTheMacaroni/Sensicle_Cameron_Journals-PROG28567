@@ -27,22 +27,22 @@ public class Asteroid : MonoBehaviour
     {
         if (!targetDecided)
         {
-            startPosition = transform.position;
+            startPosition = transform.position;//track the starting position
             targetDecided = true;
 
-            maxFloatDistance = (UnityEngine.Random.Range(0, 200)/50f);
-            directionAngle = UnityEngine.Random.Range(0, 360);
+            maxFloatDistance = (UnityEngine.Random.Range(0, 200)/50f);//randomly decide on how far the asteroid should go
+            directionAngle = UnityEngine.Random.Range(0, 360);//randomly decide on the angle of the direction the asteroid should go in
 
-            direction = new Vector2(math.cos(directionAngle) * maxFloatDistance, math.sin(directionAngle) * maxFloatDistance);
+            direction = new Vector2(math.cos(directionAngle) * maxFloatDistance, math.sin(directionAngle) * maxFloatDistance);//calculate the direction with the angle
 
         }
 
-        arrivalDistance = Vector2.Distance(startPosition, transform.position);
-        transform.position += (Vector3)direction * moveSpeed * Time.deltaTime;
+        arrivalDistance = Vector2.Distance(startPosition, transform.position);//track how far the asteroid has moved
+        transform.position += (Vector3)direction * moveSpeed * Time.deltaTime;//update the asteroid's position
 
-        if (arrivalDistance >= maxFloatDistance)
+        if (arrivalDistance >= maxFloatDistance)//if the asteroid has reached its destination... 
         {
-            targetDecided = false;
+            targetDecided = false;//... decide on a new point
         }
 
     }
