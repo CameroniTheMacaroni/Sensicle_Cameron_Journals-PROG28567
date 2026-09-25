@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public Vector2 screenEdges;
 
     public Vector3 velocity;
+    public Vector3 cancelMomentum;
 
     public float acceleration = 5f;
     public float deceleration;
@@ -45,38 +46,52 @@ public class Enemy : MonoBehaviour
         Debug.DrawLine(startingPos, chargeTarget, Color.red);
 
         //Debug.Log(Vector2.Distance(transform.position, chargeTarget) + " " + distance);
+        //screenEdges = findMaxDistance(chargeDirection);
+
         if (Vector2.Distance(startingPos, transform.position) < distance)
         {
             velocity += acceleration * Time.deltaTime * (Vector3) chargeDirection;
         }
+        else
+        {
+            if (transform.position.x > 17 || transform.position.x < -17 || transform.position.y > 9 || transform.position.y < -9)
+            {
+                cancelMomentum = velocity.normalized;//normalize the velocity vector...
 
-        screenEdges = findMaxDistance(chargeDirection);
+                if (velocity != Vector3.zero)//... and if the ship is still moving... 
+                {
+                    velocity -= cancelMomentum * Time.deltaTime * deceleration;//... substact the normalized velocity vector from the velocity vector
+                }
+            }   
+        }
+
+
 
         transform.position += velocity * Time.deltaTime;
     }
 
-    public Vector2 findMaxDistance(Vector2 direction)
-    {
-        float endX;
-        float endY;
-        if (direction.x > 0)
-        {
-            endX = 18;
-        }
-        else
-        {
-            endX = -18;
-        }
+    //public Vector2 findMaxDistance(Vector2 direction)
+    //{
+    //    float endX;
+    //    float endY;
+    //    if (direction.x > 0)
+    //    {
+    //        endX = 18;
+    //    }
+    //    else
+    //    {
+    //        endX = -18;
+    //    }
 
-        if (direction.y > 0)
-        {
-            endY = 10;
-        }
-        else
-        {
-            endY = -10;
-        }
+    //    if (direction.y > 0)
+    //    {
+    //        endY = 10;
+    //    }
+    //    else
+    //    {
+    //        endY = -10;
+    //    }
 
-        return new Vector2(endX, endY);
-    }
+    //    return new Vector2(endX, endY);
+    //}
 }
