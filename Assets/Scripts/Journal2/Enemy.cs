@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
     {
         if (!targetFound)
         {
+            Debug.Log("works");
             startingPos = transform.position;
             chargeTarget = player.transform.position;
             distance = Vector2.Distance(startingPos, chargeTarget);
@@ -58,9 +59,13 @@ public class Enemy : MonoBehaviour
             {
                 cancelMomentum = velocity.normalized;//normalize the velocity vector...
 
-                if (velocity != Vector3.zero)//... and if the ship is still moving... 
+                if (velocity.magnitude >= 0.1)//... and if the ship is still moving... 
                 {
                     velocity -= cancelMomentum * Time.deltaTime * deceleration;//... substact the normalized velocity vector from the velocity vector
+                }
+                else
+                {
+                    targetFound = false;
                 }
             }   
         }
