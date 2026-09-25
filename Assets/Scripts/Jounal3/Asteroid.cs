@@ -19,7 +19,7 @@ public class Asteroid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        moveSpeed = 5;
+        moveSpeed = 1;
     }
 
     // Update is called once per frame
