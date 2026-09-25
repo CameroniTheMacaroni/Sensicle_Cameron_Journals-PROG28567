@@ -100,6 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4194190890010494449}
+  - component: {fileID: 9095010156936449391}
   m_Layer: 0
   m_Name: Asteroid
   m_TagString: Untagged
@@ -123,3 +124,21 @@ Transform:
   - {fileID: 950219209851783337}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9095010156936449391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7969683946929540427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0de4bc6d848ee04980dfc47f7dfffc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Asteroid
+  moveSpeed: 0.5
+  arrivalDistance: 0
+  maxFloatDistance: 0
+  directionAngle: 0
+  direction: {x: 0, y: 0}
+  targetDecided: 0
