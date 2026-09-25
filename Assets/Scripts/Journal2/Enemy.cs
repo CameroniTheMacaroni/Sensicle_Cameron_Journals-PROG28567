@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
 
     public float acceleration = 5f;
     public float deceleration;
+    public float stopNowDeceleration;
     public float distance;
 
     public bool targetFound = false;
@@ -55,19 +56,18 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            cancelMomentum = velocity.normalized;
+            velocity -= cancelMomentum * Time.deltaTime * deceleration;
+
             if (transform.position.x > 17 || transform.position.x < -17 || transform.position.y > 9 || transform.position.y < -9)
             {
-                cancelMomentum = velocity.normalized;//normalize the velocity vector...
+                velocity -= cancelMomentum * Time.deltaTime * stopNowDeceleration;
+            }
 
-                if (velocity.magnitude >= 0.1)//... and if the ship is still moving... 
-                {
-                    velocity -= cancelMomentum * Time.deltaTime * deceleration;//... substact the normalized velocity vector from the velocity vector
-                }
-                else
-                {
-                    targetFound = false;
-                }
-            }   
+            if (velocity.magnitude <= 0.1)
+            {
+                targetFound = false;
+            }
         }
 
 
