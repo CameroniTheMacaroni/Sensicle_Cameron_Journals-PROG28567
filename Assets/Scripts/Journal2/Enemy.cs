@@ -36,7 +36,6 @@ public class Enemy : MonoBehaviour
     {
         if (!targetFound)
         {
-            Debug.Log("works");
             startingPos = transform.position;
             chargeTarget = player.transform.position;
             distance = Vector2.Distance(startingPos, chargeTarget);
