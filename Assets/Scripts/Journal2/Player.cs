@@ -27,12 +27,16 @@ public class Player : MonoBehaviour
     public Vector2 velocity;
     public Vector2 cancelMomentum;
 
+    public float playerRadius = 1;
+    public int radiusSides = 5;
+    public bool enemyInRadius;
+
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
 
     void Start()
     {
-
+        //playerRadar();
     }
 
     void Update()
@@ -53,8 +57,27 @@ public class Player : MonoBehaviour
         radars(maxRange);//radars
 
         playerMovement();
+
+        playerRadar();
     }
 
+    public void playerRadar()
+    {
+        float currentRadius = 0;
+        float radiusFraction = 360 / radiusSides;
+
+        for (int i = 0; i < radiusSides; i++)
+        {
+            currentRadius += radiusFraction;
+
+            Debug.Log(math.cos(currentRadius) + " " + currentRadius);
+            Vector2 startPoint = new Vector2(transform.position.x + math.cos(currentRadius * Mathf.Deg2Rad), transform.position.y + math.sin(currentRadius * Mathf.Deg2Rad));
+            Vector2 endPoint = new Vector2(transform.position.x + math.cos((currentRadius + radiusFraction) * Mathf.Deg2Rad), transform.position.y + math.sin((currentRadius + radiusFraction) * Mathf.Deg2Rad));
+
+            Debug.Log(startPoint + ", " + endPoint + " " + currentRadius);
+            Debug.DrawLine(startPoint, endPoint, Color.green);
+        }
+    }
 
     public void playerMovement()
     {
