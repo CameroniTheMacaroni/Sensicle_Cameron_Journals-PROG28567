@@ -19,8 +19,9 @@ public class UnitCircle : MonoBehaviour
 
     void Update()
     {
-        Vector2 point = new Vector2(math.cos(angles[currentAngle]), math.sin(angles[currentAngle]));//calculate the x and y of the point
+        Vector2 point = new Vector2(math.cos(angles[currentAngle] * Mathf.Deg2Rad), math.sin(angles[currentAngle] * Mathf.Deg2Rad));//calculate the x and y of the point
         Debug.DrawLine(Vector2.zero, point, Color.yellow);//draw a line from the origin to the point
+
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)//if space is pressed... 
         {

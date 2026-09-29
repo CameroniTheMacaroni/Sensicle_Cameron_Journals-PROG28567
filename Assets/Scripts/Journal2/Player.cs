@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     public Vector2 velocity;
     public Vector2 cancelMomentum;
 
-    public float playerRadius = 1;
+    public float radius = 1;
     public int radiusSides = 5;
     public bool enemyInRadius;
 
@@ -64,18 +64,26 @@ public class Player : MonoBehaviour
     public void playerRadar()
     {
         float currentRadius = 0;
-        float radiusFraction = 360 / radiusSides;
+        float radiusFraction = 360 / radiusSides;//find the jumps we need depending on how many sides the radius circle has
 
-        for (int i = 0; i < radiusSides; i++)
+        for (int i = 0; i < radiusSides; i++)//for each side of the circle ...
         {
-            currentRadius += radiusFraction;
+            currentRadius += radiusFraction;//... increment the radius jumps, ... 
 
-            Debug.Log(math.cos(currentRadius) + " " + currentRadius);
-            Vector2 startPoint = new Vector2(transform.position.x + math.cos(currentRadius * Mathf.Deg2Rad), transform.position.y + math.sin(currentRadius * Mathf.Deg2Rad));
-            Vector2 endPoint = new Vector2(transform.position.x + math.cos((currentRadius + radiusFraction) * Mathf.Deg2Rad), transform.position.y + math.sin((currentRadius + radiusFraction) * Mathf.Deg2Rad));
+            Vector2 startPoint = new Vector2(transform.position.x + math.cos(currentRadius * Mathf.Deg2Rad) * radius, transform.position.y + math.sin(currentRadius * Mathf.Deg2Rad) * radius);//... calculate one of the points in the circle... 
+            Vector2 endPoint = new Vector2(transform.position.x + math.cos((currentRadius + radiusFraction) * Mathf.Deg2Rad) * radius, transform.position.y + math.sin((currentRadius + radiusFraction) * Mathf.Deg2Rad) * radius);//... and calculate the next point in the circle, ... 
 
-            Debug.Log(startPoint + ", " + endPoint + " " + currentRadius);
-            Debug.DrawLine(startPoint, endPoint, Color.green);
+            if (Vector2.Distance(transform.position, enemyTransform.position) <= radius)//... test for if the enemy is within the radius, ... 
+            {
+                Debug.DrawLine(startPoint, endPoint, Color.red);//... and draw a line between the two with the right color to indicate enemy detection
+                enemyInRadius = true;
+            }
+            else
+            {
+                Debug.DrawLine(startPoint, endPoint, Color.green);
+                enemyInRadius = false;
+            }
+
         }
     }
 
