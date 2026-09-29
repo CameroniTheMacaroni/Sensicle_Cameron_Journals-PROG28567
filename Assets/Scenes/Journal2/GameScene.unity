@@ -1216,6 +1216,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1273894435109820, guid: b262926197932c945b68169dd6fd6c5c, type: 3}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: bombSpacing.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: numberOfBombs
       value: 5
       objectReference: {fileID: 0}
@@ -1223,6 +1227,10 @@ PrefabInstance:
       propertyPath: powerUpPrefab
       value: 
       objectReference: {fileID: 8899714584548960728, guid: 6ddde1c1c7fd7ee4590949a9e17325c0, type: 3}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: teleportRatio
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: enemyTransform
       value: 
