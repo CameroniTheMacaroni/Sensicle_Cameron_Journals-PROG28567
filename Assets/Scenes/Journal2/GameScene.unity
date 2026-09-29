@@ -313,6 +313,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4194190890010494449, guid: 462add3d0f7c62a4682e9c053b00ec93, type: 3}
   m_PrefabInstance: {fileID: 304943159}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &354946644 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 378631089131628727, guid: c3b47d100d80f96419fd12c13303c43e, type: 3}
+  m_PrefabInstance: {fileID: 1292282267}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &354946647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354946644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b291519ea9b414e89a89eae3805497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Orbit
+  centerOfMass: {fileID: 1301946847}
+  orbitSpeed: 150
+  orbitDistance: 1
+  orbitPercentage: 0
 --- !u!1 &378617068 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1742679311805458, guid: abc125f00ae369940b2c5c0275186637, type: 3}
@@ -694,8 +715,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 859344701623534545, guid: c3b47d100d80f96419fd12c13303c43e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1301946849}
+    - targetCorrespondingSourceObject: {fileID: 378631089131628727, guid: c3b47d100d80f96419fd12c13303c43e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 354946647}
   m_SourcePrefab: {fileID: 100100000, guid: c3b47d100d80f96419fd12c13303c43e, type: 3}
+--- !u!1 &1301946847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 859344701623534545, guid: c3b47d100d80f96419fd12c13303c43e, type: 3}
+  m_PrefabInstance: {fileID: 1292282267}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1301946849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301946847}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b291519ea9b414e89a89eae3805497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Orbit
+  centerOfMass: {fileID: 1840449567}
+  orbitSpeed: 150
+  orbitDistance: 1
+  orbitPercentage: 0
 --- !u!1 &1395548861
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,6 +1162,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4194190890010494449, guid: 462add3d0f7c62a4682e9c053b00ec93, type: 3}
   m_PrefabInstance: {fileID: 1791284210}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1840449567 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2301990505270886567, guid: c3b47d100d80f96419fd12c13303c43e, type: 3}
+  m_PrefabInstance: {fileID: 1292282267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2030902519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1163,6 +1216,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1273894435109820, guid: b262926197932c945b68169dd6fd6c5c, type: 3}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: numberOfBombs
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: powerUpPrefab
+      value: 
+      objectReference: {fileID: 8899714584548960728, guid: 6ddde1c1c7fd7ee4590949a9e17325c0, type: 3}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: enemyTransform
       value: 
       objectReference: {fileID: 1441953408}
@@ -1171,8 +1232,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: numberOfPowerUps
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: numberOfTrailBombs
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: cornerSpawnDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: asteroidTransforms.Array.size

@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     public int radiusSides = 5;
     public bool enemyInRadius;
 
+    public GameObject powerUpPrefab;
+    public int numberOfPowerUps;
+
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
 
@@ -52,6 +55,11 @@ public class Player : MonoBehaviour
         if (Keyboard.current.mKey.wasPressedThisFrame)//warp drive
         {
             teleport(enemyTransform, teleportRatio);
+        }
+        if (Keyboard.current.pKey.wasPressedThisFrame)//warp drive
+        {
+            spawnPowerUp();
+            Debug.Log("asdf");
         }
 
         radars(maxRange);//radars
@@ -175,7 +183,21 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
+
+    public void spawnPowerUp()
+    {
+        float currentRadius = 0;
+        float radiusFraction = 360 / numberOfPowerUps;//find the jumps we need depending on how many sides the radius circle has
+
+        for (int i = 0; i < numberOfPowerUps; i++)//for each side of the circle ...
+        {
+            currentRadius += radiusFraction;//... increment the radius jumps, ... 
+
+            Vector2 powerUpSpawn = new Vector2(transform.position.x + math.cos(currentRadius * Mathf.Deg2Rad) * radius, transform.position.y + math.sin(currentRadius * Mathf.Deg2Rad) * radius);//... calculate one of the points in the circle... 
+            Instantiate(powerUpPrefab, powerUpSpawn, Quaternion.identity);
+        }
+    }
+
     public Vector2 normalize(Vector2 input)//unused
     {
         Debug.Log("answer: " + input.normalized);
