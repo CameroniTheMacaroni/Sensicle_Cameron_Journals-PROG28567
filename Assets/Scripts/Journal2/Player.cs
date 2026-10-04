@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         //playerRadar();
+        Debug.Log("press 'p' for powerups");
     }
 
     void Update()
