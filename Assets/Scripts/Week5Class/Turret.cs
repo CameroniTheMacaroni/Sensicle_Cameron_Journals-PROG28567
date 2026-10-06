@@ -20,9 +20,11 @@ public class Turret : MonoBehaviour
 
         //Debug.DrawLine(transform.position, transform.position + (Vector3) point, UnityEngine.Color.yellow);
 
-        transform.eulerAngles += new Vector3(0, 0, 1) * Time.deltaTime * angularSpeed;
+        //transform.eulerAngles += new Vector3(0, 0, 1) * Time.deltaTime * angularSpeed;
 
-        Vector3 direction2Target = (transform.position - target.transform.position).normalized;
+        transform.Rotate(0, 0, Time.deltaTime * angularSpeed);
+
+        Vector3 direction2Target = (target.transform.position - transform.position).normalized;
         float dot = Vector3.Dot(transform.up, direction2Target);
 
         if (dot >= 0)
@@ -41,8 +43,8 @@ public class Turret : MonoBehaviour
 
         Debug.Log(deltaAngle);
 
-        if (dot < 0.95f)
-        {
+       //if (dot < 0.95f)
+        //{
             switch (Mathf.Sign(deltaAngle))
             {
                 case 1:
@@ -52,6 +54,6 @@ public class Turret : MonoBehaviour
                     transform.Rotate(0, 0, -angularSpeed * Time.deltaTime);
                     break;
             }
-        }
+        //}
     }
 }
