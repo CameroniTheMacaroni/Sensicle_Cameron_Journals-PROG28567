@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DotProduct : MonoBehaviour
 {
@@ -19,6 +20,12 @@ public class DotProduct : MonoBehaviour
 
         Debug.DrawLine(Vector2.zero, redPoint, Color.red);
         Debug.DrawLine(Vector2.zero, bluePoint, Color.blue);
+
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            float product = Vector2.Dot(redPoint, bluePoint);
+            Debug.Log(product);
+        }
 
     }
 }
