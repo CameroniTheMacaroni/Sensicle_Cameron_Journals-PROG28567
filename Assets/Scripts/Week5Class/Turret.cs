@@ -5,6 +5,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     public float angularSpeed = 1;
+    public float offset = 90;
     void Start()
     {
         
@@ -13,7 +14,7 @@ public class Turret : MonoBehaviour
    
     void Update()
     {
-        Vector2 point = new Vector2(math.cos(transform.eulerAngles.z * Mathf.Deg2Rad), math.sin(transform.eulerAngles.z * Mathf.Deg2Rad));//calculate the x and y of the point
+        Vector2 point = new Vector2(math.cos((transform.eulerAngles.z + offset) * Mathf.Deg2Rad), math.sin((transform.eulerAngles.z + offset) * Mathf.Deg2Rad));//calculate the x and y of the point
 
         Debug.DrawLine(transform.position, transform.position + (Vector3) point, UnityEngine.Color.yellow);
 
