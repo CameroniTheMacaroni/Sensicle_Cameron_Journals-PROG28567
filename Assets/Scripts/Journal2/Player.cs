@@ -20,11 +20,11 @@ public class Player : MonoBehaviour
     public float teleportRatio;
     public float maxRange = 2.5f;
 
-    public float maxSpeed = 10;
-    public float acceleration = 5;
-    public float deceleration = 5;
+    //public float maxSpeed = 5;
+    //public float acceleration = 5;
+    //public float deceleration = 5;
 
-    public Vector2 velocity;
+    //public Vector2 velocity;
     public Vector2 cancelMomentum;
 
     public float radius = 1;
@@ -33,6 +33,15 @@ public class Player : MonoBehaviour
 
     public GameObject powerUpPrefab;
     public int numberOfPowerUps;
+
+    public Vector3 playerInput;
+    public Vector3 velocity;
+
+    public float maxSpeed = 5;
+    public float acceleration = 5;
+    public float deceleration = 5;
+    public float angularSpeed;
+    [Tooltip("Measured in degrees per second")]
 
 
     //public Vector3 bombOffset = new Vector3(0, 1, 0);
@@ -60,12 +69,12 @@ public class Player : MonoBehaviour
         if (Keyboard.current.pKey.wasPressedThisFrame)//warp drive
         {
             spawnPowerUp();
-            Debug.Log("asdf");
         }
 
         radars(maxRange);//radars
 
         playerMovement();
+        playerRotation();
 
         playerRadar();
     }
@@ -98,39 +107,116 @@ public class Player : MonoBehaviour
 
     public void playerMovement()
     {
+        playerInput = Vector3.zero;
+
         if (Keyboard.current.wKey.isPressed)
         {
-            velocity += acceleration * Time.deltaTime * Vector2.up;//add acceleration variable to speed with respect to time
+            playerInput += Vector3.up;
         }
         if (Keyboard.current.dKey.isPressed)
         {
-            velocity += acceleration * Time.deltaTime * Vector2.right;
+            playerInput += Vector3.right;
         }
         if (Keyboard.current.sKey.isPressed)
         {
-            velocity += acceleration * Time.deltaTime * Vector2.down;
+            playerInput += Vector3.down;
         }
         if (Keyboard.current.aKey.isPressed)
         {
-            velocity += acceleration * Time.deltaTime * Vector2.left;
+            playerInput += Vector3.left;
         }
 
-        //if theres no movement inputs
-        if(Keyboard.current.wKey.isPressed == false && Keyboard.current.aKey.isPressed == false && Keyboard.current.sKey.isPressed == false && Keyboard.current.dKey.isPressed == false)
+        if (playerInput.sqrMagnitude > 0)//if there is input
         {
-            cancelMomentum = velocity.normalized;//normalize the velocity vector...
+            velocity += acceleration * Time.deltaTime * playerInput.normalized;//accelerate relative to input
 
-            if (velocity != Vector2.zero)//... and if the ship is still moving... 
+            if ( velocity.sqrMagnitude > maxSpeed * maxSpeed)//going too fast
             {
-                velocity -= cancelMomentum * Time.deltaTime * deceleration;//... substact the normalized velocity vector from the velocity vector
+                velocity = Vector3.ClampMagnitude(velocity, maxSpeed);//enforce speed limit
+            }
+        }
+        else //no input detected
+        {
+            float deltaVelocity = deceleration * Time.deltaTime;
+
+            if (velocity.magnitude > deltaVelocity)//if we still need to slow down
+            {
+                velocity -= deceleration * Time.deltaTime * velocity.normalized;//decelerate
+            }
+            else
+            {
+                velocity = Vector3.zero;//complete stop
             }
         }
 
-        velocity = Vector2.ClampMagnitude(velocity, maxSpeed);//don't let the ship go too fast
-        transform.position += (Vector3) velocity * Time.deltaTime;//update ship position
+        transform.position += velocity * Time.deltaTime;//update ship position relative to velocity
 
     }
-   
+
+    public void playerRotation()
+    {
+        if (velocity.sqrMagnitude == 0) return;//not moving, do nothing
+        
+        float deltaAngle = computeShortestAngle(transform.up, velocity);
+
+
+        float rotationDirection = Mathf.Sign(deltaAngle);
+        float rotationStep = angularSpeed * Time.deltaTime;
+
+        if(rotationStep < MathF.Abs(deltaAngle))//if we still need to rotate
+        {
+            transform.Rotate(0, 0, rotationDirection * rotationStep);//rotate relative to angular speed
+        }
+        else
+        {
+            transform.Rotate(0, 0, deltaAngle);//lock-on
+        }
+        
+    }
+
+    public float computeShortestAngle(Vector3 a, Vector3 b)
+    {
+        float angleA = Mathf.Atan2(a.y, a.x) * Mathf.Rad2Deg;
+        float angleB = Mathf.Atan2(b.y, b.x) * Mathf.Rad2Deg;
+
+        return Mathf.DeltaAngle(angleA, angleB);
+    }
+
+    //public void playerMovementOld()
+    //{
+    //    if (Keyboard.current.wKey.isPressed)
+    //    {
+    //        velocity += acceleration * Time.deltaTime * Vector2.up;//add acceleration variable to speed with respect to time
+    //    }
+    //    if (Keyboard.current.dKey.isPressed)
+    //    {
+    //        velocity += acceleration * Time.deltaTime * Vector2.right;
+    //    }
+    //    if (Keyboard.current.sKey.isPressed)
+    //    {
+    //        velocity += acceleration * Time.deltaTime * Vector2.down;
+    //    }
+    //    if (Keyboard.current.aKey.isPressed)
+    //    {
+    //        velocity += acceleration * Time.deltaTime * Vector2.left;
+    //    }
+
+    //    //if theres no movement inputs
+    //    if (Keyboard.current.wKey.isPressed == false && Keyboard.current.aKey.isPressed == false && Keyboard.current.sKey.isPressed == false && Keyboard.current.dKey.isPressed == false)
+    //    {
+    //        cancelMomentum = velocity.normalized;//normalize the velocity vector...
+
+    //        if (velocity != Vector2.zero)//... and if the ship is still moving... 
+    //        {
+    //            velocity -= cancelMomentum * Time.deltaTime * deceleration;//... substact the normalized velocity vector from the velocity vector
+    //        }
+    //    }
+
+    //    velocity = Vector2.ClampMagnitude(velocity, maxSpeed);//don't let the ship go too fast
+    //    transform.position += (Vector3)velocity * Time.deltaTime;//update ship position
+
+    //}
+
     IEnumerator SpawnBombAtOffset(Vector2 inOffset, int numberofbombs, Vector2 bombSpacing)
     {
         Vector3 spawnPosition = transform.position;
