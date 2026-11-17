@@ -2,15 +2,43 @@ using UnityEngine;
 
 public class TestPhysics : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject thing;
+
+    public Rigidbody2D rbGREEN;
+    public Rigidbody2D rbORANGE;
+    public Collider2D collider;
     void Start()
     {
-        //testcommit
+        //Debug.Log(thing.GetComponent<CollisionDetectionMode2D>());
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        //rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        //{
+        //    Debug.Log("its simulated alright ;)");
+        //}
+
+
+        if (rbGREEN.IsTouching(collider) == true)
+        {
+            Debug.Log("works GREEN");
+        }
+        else
+        {
+            Debug.Log("no GREEN");
+        }
+
+
+
+        if (rbORANGE.IsTouching(collider) == true)
+        {
+            Debug.Log("works ORANGE");
+        }
+        else
+        {
+            Debug.Log("no ORANGE");
+        }
     }
 }
