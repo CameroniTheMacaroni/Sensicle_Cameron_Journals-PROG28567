@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Collector : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class Collector : MonoBehaviour
     public TextMeshProUGUI targetText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
+
+    //UI toggles
+    public Toggle toggleChair;
+    public Toggle toggleSofa;
+    public Toggle toggleLamp;
+    public Toggle toggleFridge;
+    public Toggle toggleDrawer;
+    public Toggle toggleBed;
 
     //collectables
     public GameObject chair;
@@ -63,13 +72,14 @@ public class Collector : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, targets[i].transform.position) < collisionDistance)//... and detect if they're close enough to the player, ... 
                 {
-                    if (i == targetNumber)//... then make sure that the player is close to the right one... 
-                    {
-                        //... if true... 
-                        targets[i].gameObject.SetActive(false);//... disable the collected item, ... 
-                        targets.Remove(targets[i].gameObject);//... remove it from the list...
-                        newTargetItem();//... and generate a new number.
-                    }
+                    //if (i == targetNumber)//... then make sure that the player is close to the right one... 
+                    //{
+                    //... if true... 
+                    updateToggles(i);
+                    targets[i].gameObject.SetActive(false);//... disable the collected item, ... 
+                    targets.Remove(targets[i].gameObject);//... remove it from the list...
+                    newTargetItem();//... and generate a new number.
+                    //}
                 }
             }
         }
@@ -106,16 +116,40 @@ public class Collector : MonoBehaviour
 
         if (targets.Count > 0)//if theres more to find... 
         {
-            targetNumber = Random.Range(0, targets.Count);//... generate a new number for something to find
+            //targetNumber = Random.Range(0, targets.Count);//... generate a new number for something to find
 
-            targetText.text = "Find: " + targets[targetNumber].name;//update the target text
+            targetText.text = "Find: ";
         }
         else
         {
             foundEverything = true;
             targetText.text = "Find: Checkout";//update the target text for when the player has found everything
         }
+    }
 
-
+    public void updateToggles(int index)
+    {
+        Debug.Log(index);
+        switch (index)
+        {
+            case 1:
+                toggleChair.isOn = true;
+                break;
+            case 2:
+                toggleSofa.isOn = true;
+                break;
+            case 3:
+                toggleLamp.isOn = true;
+                break;
+            case 4:
+                toggleFridge.isOn = true;
+                break;
+            case 5:
+                toggleDrawer.isOn = true;
+                break;
+            case 6:
+                toggleBed.isOn = true;
+                break;
+        }
     }
 }
