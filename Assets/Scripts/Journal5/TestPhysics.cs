@@ -6,7 +6,7 @@ public class TestPhysics : MonoBehaviour
 
     public Rigidbody2D rbGREEN;
     public Rigidbody2D rbORANGE;
-    public Collider2D collider;
+    //public Collider2D collider;
     void Start()
     {
         //Debug.Log(thing.GetComponent<CollisionDetectionMode2D>());
@@ -21,24 +21,24 @@ public class TestPhysics : MonoBehaviour
         //}
 
 
-        if (rbGREEN.IsTouching(collider) == true)
-        {
-            Debug.Log("works GREEN");
-        }
-        else
-        {
-            Debug.Log("no GREEN");
-        }
+    //    if (rbGREEN.IsTouching(GetComponent<Collider>()) == true)
+    //    {
+    //        Debug.Log("works GREEN");
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("no GREEN");
+    //    }
 
 
 
-        if (rbORANGE.IsTouching(collider) == true)
-        {
-            Debug.Log("works ORANGE");
-        }
-        else
-        {
-            Debug.Log("no ORANGE");
-        }
+    //    if (rbORANGE.IsTouching(GetComponent<Collider>()) == true)
+    //    {
+    //        Debug.Log("works ORANGE");
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("no ORANGE");
+    //    }
     }
 }

@@ -24,6 +24,9 @@ public class Collector : MonoBehaviour
 
     public GameObject checkout;
 
+    public GameObject Enemy1;
+    public GameObject Enemy2;
+
     //target list
     public int targetNumber;
     public List<GameObject> targets;
@@ -85,6 +88,15 @@ public class Collector : MonoBehaviour
                 youLose.SetActive(true);//... the player loses.
             }
         }
+
+        if (Vector3.Distance(transform.position, Enemy1.transform.position) < collisionDistance || Vector3.Distance(transform.position, Enemy2.transform.position) < collisionDistance)
+        {
+            if (!gameWon)
+            {
+                youLose.SetActive(true);
+            }
+        }
+ 
     }
 
     public void newTargetItem()
